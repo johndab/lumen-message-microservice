@@ -25,7 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 // $app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +47,14 @@ $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
     App\Console\Kernel::class
 );
+
+$app->singleton('App\Services\MessageService', function() {
+    return new App\Services\MessageService();
+});
+
+$app->singleton('App\Services\ThreadService', function() {
+    return new App\Services\ThreadService();
+});
 
 /*
 |--------------------------------------------------------------------------
