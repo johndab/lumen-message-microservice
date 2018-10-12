@@ -22,5 +22,8 @@ $router->post('/message/{threadId}', 'MessageController@add');
 /** Threads **/
 $router->get('/threads/{userId}', 'ThreadController@get');
 $router->post('/thread', 'ThreadController@add');
-$router->put('/thread', 'ThreadController@update');
-$router->delete('/thread', 'ThreadController@delete');
+$router->put('/thread/{threadId}', 'ThreadController@update');
+$router->delete('/thread/{threadId}', 'ThreadController@delete');
+
+$router->post('/thread/users/{threadId}', 'ThreadController@addUsers');
+$router->delete('/thread/users/{threadId}', 'ThreadController@removeUsers');

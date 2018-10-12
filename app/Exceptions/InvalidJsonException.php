@@ -6,13 +6,14 @@ use Exception;
 
 class InvalidJsonException extends Exception
 {
-    /**
-     * Report the exception.
-     *
-     * @return void
-     */
-    public function report()
-    {
-        //
+    public function __construct($message = null, $code = null) {
+        parent::__construct("Json invalid", 422);
+        if($message != null) {
+            $this->message = $message;
+        }
+        if($code != null) {
+            $this->code = $code;
+        }
     }
+
 }

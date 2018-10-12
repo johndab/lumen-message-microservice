@@ -45,6 +45,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        $status = $exception->getCode();
+        $message = $exception->getMessage();
+
+        if( !($status > 200 && $status < 600) ) {
+            $status = 400;
+        }
+        
+        $m = isset($message) ? $message : 'Internal Server Error';
+        return response(['message' => $m ], $status);
     }
 }
