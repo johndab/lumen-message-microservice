@@ -48,12 +48,12 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
-$app->singleton('App\Services\MessageService', function() {
-    return new App\Services\MessageService();
-});
-
 $app->singleton('App\Services\ThreadService', function() {
     return new App\Services\ThreadService();
+});
+
+$app->singleton('App\Services\MessageService', function($app) {
+    return new App\Services\MessageService($app->make('App\Services\ThreadService'));
 });
 
 /*

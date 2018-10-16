@@ -16,7 +16,7 @@ $router->get('/', function () use ($router) {
 });
 
 /** Messages **/
-$router->get('/messages', 'MessageController@get');
+$router->get('/messages/{threadId}', 'MessageController@get');
 $router->post('/message/{threadId}', 'MessageController@add');
 
 /** Threads **/

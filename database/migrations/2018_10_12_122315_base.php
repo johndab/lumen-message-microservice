@@ -24,7 +24,7 @@ class Base extends Migration
             $table->increments('id');
             $table->integer('thread_id')->unsigned()->index();
             $table->integer('user_id')->unsigned();
-            $table->string('content')->charset('utf8');
+            $table->text('content')->charset('utf8');
             $table->json('params')->nullable();
             $table->timestamps();
 

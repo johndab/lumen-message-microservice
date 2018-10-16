@@ -12,7 +12,7 @@ class ThreadService {
  /**
  * Check if thread exists
  */
-  private function checkAndGet(int $threadId) {
+  public function checkAndGet(int $threadId) {
     $thread = Thread::find($threadId);
     if(!$thread) {
       throw new NoThreadException("Thread with id '$threadId' does not exist!");
@@ -30,7 +30,7 @@ class ThreadService {
   }
 
   /**
-   *  Add thread
+   *  Add a thread
    */
   public function add(String $title, $params) {
     return Thread::create(['title' => $title, 'params' => $params]);

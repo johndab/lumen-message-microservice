@@ -95,21 +95,4 @@ class ThreadController extends Controller
         }
         return $this->success();
     }
-
-    /**
-     * Check if json correct or throw exception
-     */
-    private function checkJson($string) {
-        if($string == null) return;
-        try {
-            json_decode($string);
-        } catch (\Exception $e) {
-            throw new InvalidJsonException();
-        }
-
-        if(json_last_error() != JSON_ERROR_NONE) {
-            throw new InvalidJsonException();
-        }
-    }
-
 }

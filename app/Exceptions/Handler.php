@@ -43,16 +43,21 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        $status = $exception->getCode();
-        $message = $exception->getMessage();
+        if($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) 
+        {
+            return response()->json(['message' => 'Route not found exception'], 404);
+        }
+
+        $status = $e->getCode();
+        $message = $e->getMessage();
 
         if( !($status > 200 && $status < 600) ) {
             $status = 400;
         }
         
         $m = isset($message) ? $message : 'Internal Server Error';
-        return response(['message' => $m ], $status);
+        return response()->json(['message' => $m ], $status);
     }
 }
