@@ -14,6 +14,7 @@ Deployable as independent (micro)service with its own database providing REST AP
 - Update `.env` :
   - Set `APP_DEBUG` to `false` and specify `APP_KEY` (32 random characters)
   - Create empty database and set connection details
+  - You can specify `APP_URL_PREFIX` to add a prefix to all endpoints
 - Run:
 
 ```bash

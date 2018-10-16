@@ -102,6 +102,7 @@ $app->singleton('App\Services\ThreadService', function() {
 */
 
 $app->router->group([
+    'prefix' => env('APP_URL_PREFIX', ''),
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
