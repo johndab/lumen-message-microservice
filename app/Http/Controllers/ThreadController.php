@@ -51,15 +51,16 @@ class ThreadController extends Controller
     /**
      * Update thread
      */
-    public function update(int $threadId, Request $request) {
+    public function update(int $threadId, $userId = null, Request $request) {
         $this->validate($request, [
             'title' => 'min:3|max:255',
         ]);
 
+        $this->service->checkUser($threadId, $userId);
         $title = $request->title;
         $params = $request->params;
         $this->checkJson($params);
-
+        
         $thread = $this->service->update($threadId, $title, $params);
         return response()->json($thread);
     }
@@ -67,7 +68,8 @@ class ThreadController extends Controller
     /**
      * Delete thread
      */
-    public function delete(int $threadId) {
+    public function delete(int $threadId, $userId = null) {
+        $this->service->checkUser($threadId, $userId);
         $this->service->delete($threadId);
         return $this->success();
     }
@@ -75,8 +77,9 @@ class ThreadController extends Controller
     /**
      * Add users to thread
      */
-    public function addUsers(int $threadId, Request $request) {
+    public function addUsers(int $threadId, int $userId = null, Request $request) {
         $users = $request->users;
+        $this->service->checkUser($threadId, $userId);
         if($users) {
             $userIds = collect($users);
             $this->service->addUsers($threadId, $userIds);
@@ -87,8 +90,9 @@ class ThreadController extends Controller
     /**
      * Remove users from thread
      */
-    public function removeUsers(int $threadId, Request $request) {
+    public function removeUsers(int $threadId, int $userId = null, Request $request) {
         $users = $request->users;
+        $this->service->checkUser($threadId, $userId);
         if($users) {
             $userIds = collect($users);
             $this->service->removeUsers($threadId, $userIds);

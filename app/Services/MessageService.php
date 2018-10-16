@@ -14,8 +14,8 @@ class MessageService {
   /**
    * Get thread messages
    */
-  public function get(int $threadId, int $take, int $skip) {
-    $thread = $this->threadService->checkAndGet($threadId);
+  public function get(int $threadId, $userId, int $take, int $skip) {
+    $thread = $this->threadService->checkUser($threadId, $userId);
     return $thread->messages()->skip($skip)->take($take)->get();
   }
 
@@ -24,7 +24,7 @@ class MessageService {
    *  Add a message
    */
   public function add(int $threadId, int $userId, string $content, $params) {
-    $this->threadService->checkAndGet($threadId);
+    $this->threadService->checkUser($threadId, $userId);
     
     return Message::create([
       'thread_id' => $threadId,

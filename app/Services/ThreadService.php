@@ -4,18 +4,29 @@ namespace App\Services;
 
 use Illuminate\Support\Collection;
 use App\Exceptions\NoThreadException;
+use App\Exceptions\NoAccessException;
 use App\Thread;
 use App\UserThread;
 
 class ThreadService {
 
- /**
- * Check if thread exists
- */
-  public function checkAndGet(int $threadId) {
-    $thread = Thread::find($threadId);
+  /**
+  * Check if thread exists
+  */
+  private function checkAndGet(int $threadId) {
+    $thread = Thread::with('userThreads')->where('id', $threadId)->first();
     if(!$thread) {
       throw new NoThreadException("Thread with id '$threadId' does not exist!");
+    }
+    return $thread;
+  }
+
+  public function checkUser(int $threadId, $userId) {
+    $thread = $this->checkAndGet($threadId);
+    if($userId == null) return $thread;
+
+    if($thread->userThreads()->where('user_id', $userId)->count() == 0) {
+      throw new NoAccessException("You don't have access to the thread '$threadId'");
     }
     return $thread;
   }

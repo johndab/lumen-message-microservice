@@ -27,7 +27,7 @@ $ php artisan migrate
 
 ## Threads
 
-> Each request should have `App-Token` header with the string specified in `.env`
+> Each request must have `App-Token` header with the correct token specified in `.env`
 
 ### Get all user threads
 ```
@@ -51,10 +51,12 @@ POST /thread
 
 ### Update thread
 ```
-PUT /thread/{threadId}
+PUT /thread/{threadId}/{userId?}
 ```
 - Url
   - int **threadId*** - Id of the thread to update
+  - int **userId** - if specified will be checked if user have access to the thread
+- Body
   - string **title** - New title (not updated if null)
   - string **params** - New params
 
@@ -62,19 +64,21 @@ PUT /thread/{threadId}
 
 ### Delete thread
 ```
-DELETE /thread/{threadId}
+DELETE /thread/{threadId}/{userId?}
 ```
 - Url
   - int **threadId*** - Id of the thread to delete
+  - int **userId** - if specified will be checked if user have access to the thread
 
 <hr>
 
 ### Add users
 ```
-POST /thread/users/{threadId}
+POST /thread/users/{threadId}/{userId?}
 ```
 - Url
   - int **threadId*** - Id of the thread to delete
+  - int **userId** - if specified will be checked if user have access to the thread
 - Body
   - array(int) **users** - Ids of users to add
 
@@ -82,10 +86,11 @@ POST /thread/users/{threadId}
 
 ### Remove users
 ```
-DELETE /thread/users/{threadId}
+DELETE /thread/users/{threadId}/{userId?}
 ```
 - Url
   - int **threadId*** - Id of the thread to delete
+  - int **userId** - if specified will be checked if user have access to the thread
 - Body
   - array(int) **users** - Ids of users to remove
 
@@ -95,10 +100,11 @@ DELETE /thread/users/{threadId}
 
 ### Get messages
 ```
-GET /messages/{threadId}
+GET /messages/{threadId}/{userId?}
 ```
 - Url
   - int **threadId*** - Id of the thread
+  - int **userId** - if specified will be checked if user have access to the thread
 - Query string
   - int **take** - number of messages to take (default: 10)
   - int **skip** - number of message to skip (default: 0)

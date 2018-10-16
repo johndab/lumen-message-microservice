@@ -18,11 +18,11 @@ class MessageController extends Controller
     /**
      * Get thread messages
      */
-    public function get(int $threadId, Request $request) {
+    public function get(int $threadId, $userId = null, Request $request) {
         $take = isset($request->take) ? $request->take : 10;
         $skip = isset($request->skip) ? $request->skip : 0;
 
-        $messages = $this->service->get($threadId, $take, $skip);
+        $messages = $this->service->get($threadId, $userId, $take, $skip);
         return response()->json(
             MessageResource::collection($messages)
         );
