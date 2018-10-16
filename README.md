@@ -53,7 +53,7 @@ PUT /thread/{threadId}
 ```
 - Url
   - int **threadId*** - Id of the thread to update
-  - string **title** - New title
+  - string **title** - New title (not updated if null)
   - string **params** - New params
 
 <hr>

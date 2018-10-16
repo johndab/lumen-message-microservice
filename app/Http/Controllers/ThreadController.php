@@ -53,7 +53,7 @@ class ThreadController extends Controller
      */
     public function update(int $threadId, Request $request) {
         $this->validate($request, [
-            'title' => 'Required|min:3|max:255',
+            'title' => 'min:3|max:255',
         ]);
 
         $title = $request->title;

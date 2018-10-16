@@ -47,9 +47,11 @@ class ThreadService {
   /**
    * Update thread title and params
    */
-  public function update(int $threadId, String $title, $params) {
+  public function update(int $threadId, $title, $params) {
     $thread = $this->checkAndGet($threadId);
-    $thread->title = $title;
+    if($title) {
+      $thread->title = $title;
+    }
     $thread->params = $params;
     $thread->save();
 
