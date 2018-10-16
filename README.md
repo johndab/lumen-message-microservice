@@ -41,7 +41,7 @@ GET /threads/{userId}
 POST /thread
 ```
 - Body
-  - string **title*** - (required) title of the new thread 
+  - string **title*** - title of the new thread 
   - array(int) **users** - Ids of users assigned to the thread
   - string **params** - JSON with parameters for this thread
 
@@ -52,7 +52,7 @@ POST /thread
 PUT /thread/{threadId}
 ```
 - Url
-  - int **threadId** - Id of the thread to update
+  - int **threadId*** - Id of the thread to update
   - string **title** - New title
   - string **params** - New params
 
@@ -63,7 +63,7 @@ PUT /thread/{threadId}
 DELETE /thread/{threadId}
 ```
 - Url
-  - int **threadId** - Id of the thread to delete
+  - int **threadId*** - Id of the thread to delete
 
 <hr>
 
@@ -72,7 +72,7 @@ DELETE /thread/{threadId}
 POST /thread/users/{threadId}
 ```
 - Url
-  - int **threadId** - Id of the thread to delete
+  - int **threadId*** - Id of the thread to delete
 - Body
   - array(int) **users** - Ids of users to add
 
@@ -83,14 +83,37 @@ POST /thread/users/{threadId}
 DELETE /thread/users/{threadId}
 ```
 - Url
-  - int **threadId** - Id of the thread to delete
+  - int **threadId*** - Id of the thread to delete
 - Body
   - array(int) **users** - Ids of users to remove
 
 <hr>
 
 ## Messages
-### Work in progress...
+
+### Get messages
+```
+GET /messages/{threadId}
+```
+- Url
+  - int **threadId*** - Id of the thread
+- Query string
+  - int **take** - number of messages to take (default: 10)
+  - int **skip** - number of message to skip (default: 0)
+
+
+### Add a message
+```
+POST /message/{threadId}
+```
+- Url
+  - int **threadId*** - Id of the thread
+- Body
+  - string **content*** - Message content
+  - int **userId***
+  - string **params** - JSON with parameters for this messages
+
+<hr>
 
 ## License
 This project is licensed under the MIT License
