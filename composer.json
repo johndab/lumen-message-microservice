@@ -1,7 +1,7 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "johndab/lumen-message-microservice",
+    "description": "lumen-message-microservice.",
+    "keywords": ["messaging","lumen", "messages", "microservice"],
     "license": "MIT",
     "type": "project",
     "require": {
