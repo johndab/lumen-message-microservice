@@ -23,7 +23,6 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
 
 $app->withEloquent();
 
@@ -67,9 +66,9 @@ $app->singleton('App\Services\MessageService', function($app) {
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    App\Http\Middleware\CheckToken::class
+]);
 
 /*
 |--------------------------------------------------------------------------

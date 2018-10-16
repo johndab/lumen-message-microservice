@@ -12,7 +12,7 @@ Deployable as independent (micro)service with its own database providing REST AP
 
 - Rename `.env.example` to `.env`
 - Update `.env` :
-  - Set `APP_DEBUG` to `false` and specify `APP_KEY` (32 random characters)
+  - Set `APP_DEBUG` to `false` and specify `APP_KEY` (32 random characters) and `APP_TOKEN`
   - Create empty database and set connection details
   - You can specify `APP_URL_PREFIX` to add a prefix to all endpoints
 - Run:
@@ -26,6 +26,8 @@ $ php artisan migrate
 ```
 
 ## Threads
+
+> Each request should have `App-Token` header with the string specified in `.env`
 
 ### Get all user threads
 ```
