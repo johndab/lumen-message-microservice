@@ -23,7 +23,7 @@ class Base extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('thread_id')->unsigned()->index();
-            $table->integer('user_id')->unsigned();
+            $table->uuid('client_id');
             $table->text('content')->charset('utf8');
             $table->json('params')->nullable();
             $table->timestamps();
@@ -35,11 +35,11 @@ class Base extends Migration
             $table->index(['thread_id', 'created_at']);
         });
 
-        Schema::create('user_threads', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
+        Schema::create('client_threads', function (Blueprint $table) {
+            $table->uuid('client_id');
             $table->integer('thread_id')->unsigned();
 
-            $table->primary(['user_id', 'thread_id']);
+            $table->primary(['client_id', 'thread_id']);
             $table->timestamps();
         });
 

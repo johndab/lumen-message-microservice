@@ -8,9 +8,9 @@ class Thread extends JsonResource
 {
     public function toArray($request)
     {
-			$users = $this->userThreads;
-      if($users != null)
-      	$users = $users->map(function($ut) { return $ut->user_id; });
+			$clients = $this->clientThreads;
+      if($clients != null)
+      	$clients = $clients->map(function($ut) { return $ut->client_id; });
 			
 			$created = $this->created_at;
 			if($created != null)
@@ -20,7 +20,7 @@ class Thread extends JsonResource
 					'id' => $this->id,
 					'title' => $this->title,
 					'params' => $this->params,
-					'users' => $users,
+					'clients' => $clients,
 					'created' => $created,
 			];
     }

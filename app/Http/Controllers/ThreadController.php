@@ -17,10 +17,10 @@ class ThreadController extends Controller
     }
 
     /**
-     * Get user's threads
+     * Get client's threads
      */
-    public function get(int $userId) {
-        $threads = $this->service->get($userId);
+    public function get(string $clientId) {
+        $threads = $this->service->get($clientId);
         return response()->json(
             ThreadResource::collection($threads)
         );
@@ -39,10 +39,10 @@ class ThreadController extends Controller
         $this->checkJson($params);
 
         $thread = $this->service->add($title, $params); 
-        $users = $request->users;
-        if($users) {
-            $userIds = collect($users);
-            $this->service->addUsers($thread->id, $userIds);
+        $clients = $request->clients;
+        if($clients) {
+            $clientIds = collect($clients);
+            $this->service->addClients($thread->id, $clientIds);
         }
 
         return response()->json($thread);
@@ -51,12 +51,12 @@ class ThreadController extends Controller
     /**
      * Update thread
      */
-    public function update(int $threadId, $userId = null, Request $request) {
+    public function update(int $threadId, $clientId = null, Request $request) {
         $this->validate($request, [
             'title' => 'min:3|max:255',
         ]);
 
-        $this->service->checkUser($threadId, $userId);
+        $this->service->checkClient($threadId, $clientId);
         $title = $request->title;
         $params = $request->params;
         $this->checkJson($params);
@@ -68,34 +68,34 @@ class ThreadController extends Controller
     /**
      * Delete thread
      */
-    public function delete(int $threadId, $userId = null) {
-        $this->service->checkUser($threadId, $userId);
+    public function delete(int $threadId, $clientId = null) {
+        $this->service->checkClient($threadId, $clientId);
         $this->service->delete($threadId);
         return $this->success();
     }
 
     /**
-     * Add users to thread
+     * Add clients to thread
      */
-    public function addUsers(int $threadId, int $userId = null, Request $request) {
-        $users = $request->users;
-        $this->service->checkUser($threadId, $userId);
-        if($users) {
-            $userIds = collect($users);
-            $this->service->addUsers($threadId, $userIds);
+    public function addClient(int $threadId, string $clientId = null, Request $request) {
+        $clients = $request->clients;
+        $this->service->checkClient($threadId, $clientId);
+        if($clients) {
+            $clientIds = collect($clients);
+            $this->service->addClients($threadId, $clientIds);
         }
         return $this->success();
     }
 
     /**
-     * Remove users from thread
+     * Remove clients from thread
      */
-    public function removeUsers(int $threadId, int $userId = null, Request $request) {
-        $users = $request->users;
-        $this->service->checkUser($threadId, $userId);
-        if($users) {
-            $userIds = collect($users);
-            $this->service->removeUsers($threadId, $userIds);
+    public function removeClients(int $threadId, string $clientId = null, Request $request) {
+        $clients = $request->clients;
+        $this->service->checkClient($threadId, $clientId);
+        if($clients) {
+            $clientIds = collect($clients);
+            $this->service->removeClients($threadId, $clientIds);
         }
         return $this->success();
     }

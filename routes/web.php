@@ -16,14 +16,14 @@ $router->get('/', function () use ($router) {
 });
 
 /** Messages **/
-$router->get('/messages/{threadId}[/{userId}]', 'MessageController@get');
+$router->get('/messages/{threadId}[/{clientId}]', 'MessageController@get');
 $router->post('/message/{threadId}', 'MessageController@add');
 
 /** Threads **/
-$router->get('/threads/{userId}', 'ThreadController@get');
+$router->get('/threads/{clientId}', 'ThreadController@get');
 $router->post('/thread', 'ThreadController@add');
-$router->put('/thread/{threadId}[/{userId}]', 'ThreadController@update');
-$router->delete('/thread/{threadId}[/{userId}]', 'ThreadController@delete');
+$router->put('/thread/{threadId}[/{clientId}]', 'ThreadController@update');
+$router->delete('/thread/{threadId}[/{clientId}]', 'ThreadController@delete');
 
-$router->post('/thread/users/{threadId}[/{userId}]', 'ThreadController@addUsers');
-$router->delete('/thread/users/{threadId}[/{userId}]', 'ThreadController@removeUsers');
+$router->post('/thread/clients/{threadId}[/{clientId}]', 'ThreadController@addClients');
+$router->delete('/thread/clients/{threadId}[/{clientId}]', 'ThreadController@removeClients');

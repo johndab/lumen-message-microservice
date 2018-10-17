@@ -16,7 +16,7 @@ class Message extends JsonResource
 					'id' => $this->id,
 					'content' => $this->content,
 					'params' => $this->params,
-          'userId' => $this->user_id,
+          'clientId' => $this->client_id,
           'threadId' => $this->thread_id,
 					'created' => $created,
 			];

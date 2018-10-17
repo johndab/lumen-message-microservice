@@ -29,12 +29,12 @@ $ php artisan migrate
 
 > Each request must have `App-Token` header with the correct token specified in `.env`
 
-### Get all user threads
+### Get all client threads
 ```
-GET /threads/{userId}
+GET /threads/{clientId}
 ```
 - Url
-  - int **userId** (required)
+  - int **clientId** (required)
 
 <hr> 
 
@@ -44,18 +44,18 @@ POST /thread
 ```
 - Body
   - string **title*** - title of the new thread 
-  - array(int) **users** - Ids of users assigned to the thread
+  - array(string) **clients** - UUIds of clients assigned to the thread
   - string **params** - JSON with parameters for this thread
 
 <hr>
 
 ### Update thread
 ```
-PUT /thread/{threadId}/{userId?}
+PUT /thread/{threadId}/{clientId?}
 ```
 - Url
   - int **threadId*** - Id of the thread to update
-  - int **userId** - if specified will be checked if user have access to the thread
+  - string **clientId** - if specified will be checked if client have access to the thread
 - Body
   - string **title** - New title (not updated if null)
   - string **params** - New params
@@ -64,35 +64,35 @@ PUT /thread/{threadId}/{userId?}
 
 ### Delete thread
 ```
-DELETE /thread/{threadId}/{userId?}
+DELETE /thread/{threadId}/{clientId?}
 ```
 - Url
   - int **threadId*** - Id of the thread to delete
-  - int **userId** - if specified will be checked if user have access to the thread
+  - string **clientId** - if specified will be checked if client have access to the thread
 
 <hr>
 
-### Add users
+### Add clients
 ```
-POST /thread/users/{threadId}/{userId?}
+POST /thread/clients/{threadId}/{clientId?}
 ```
 - Url
   - int **threadId*** - Id of the thread to delete
-  - int **userId** - if specified will be checked if user have access to the thread
+  - string **clientId** - if specified will be checked if client have access to the thread
 - Body
-  - array(int) **users** - Ids of users to add
+  - array(string) **clients** - Ids of clients to add
 
 <hr>
 
-### Remove users
+### Remove clients
 ```
-DELETE /thread/users/{threadId}/{userId?}
+DELETE /thread/clients/{threadId}/{clientId?}
 ```
 - Url
   - int **threadId*** - Id of the thread to delete
-  - int **userId** - if specified will be checked if user have access to the thread
+  - string **clientId** - if specified will be checked if client have access to the thread
 - Body
-  - array(int) **users** - Ids of users to remove
+  - array(string) **clients** - Ids of clients to remove
 
 <hr>
 
@@ -100,11 +100,11 @@ DELETE /thread/users/{threadId}/{userId?}
 
 ### Get messages
 ```
-GET /messages/{threadId}/{userId?}
+GET /messages/{threadId}/{clientId?}
 ```
 - Url
   - int **threadId*** - Id of the thread
-  - int **userId** - if specified will be checked if user have access to the thread
+  - string **clientId** - if specified will be checked if client have access to the thread
 - Query string
   - int **take** - number of messages to take (default: 10)
   - int **skip** - number of message to skip (default: 0)
@@ -118,7 +118,7 @@ POST /message/{threadId}
   - int **threadId*** - Id of the thread
 - Body
   - string **content*** - Message content
-  - int **userId***
+  - int **clientId***
   - string **params** - JSON with parameters for this messages
 
 <hr>

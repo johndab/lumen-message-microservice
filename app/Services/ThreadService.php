@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use App\Exceptions\NoThreadException;
 use App\Exceptions\NoAccessException;
 use App\Thread;
-use App\UserThread;
+use App\ClientThread;
 
 class ThreadService {
 
@@ -14,30 +14,30 @@ class ThreadService {
   * Check if thread exists
   */
   private function checkAndGet(int $threadId) {
-    $thread = Thread::with('userThreads')->where('id', $threadId)->first();
+    $thread = Thread::with('clientThreads')->where('id', $threadId)->first();
     if(!$thread) {
       throw new NoThreadException("Thread with id '$threadId' does not exist!");
     }
     return $thread;
   }
 
-  public function checkUser(int $threadId, $userId) {
+  public function checkClient(int $threadId, $clientId) {
     $thread = $this->checkAndGet($threadId);
-    if($userId == null) return $thread;
+    if($clientId == null) return $thread;
 
-    if($thread->userThreads()->where('user_id', $userId)->count() == 0) {
+    if($thread->clientThreads()->where('client_id', $clientId)->count() == 0) {
       throw new NoAccessException("You don't have access to the thread '$threadId'");
     }
     return $thread;
   }
 
   /**
-   * Get user threads
+   * Get client threads
    */
-  public function get(int $userId) {
-    return Thread::whereHas('userThreads', function ($query) use ($userId) {
-      $query->where('user_id', $userId);
-    })->with('userThreads')->get();
+  public function get(string $clientId) {
+    return Thread::whereHas('clientThreads', function ($query) use ($clientId) {
+      $query->where('client_id', $clientId);
+    })->with('clientThreads')->get();
   }
 
   /**
@@ -70,25 +70,25 @@ class ThreadService {
   }
 
   /**
-   * Add users to thread
+   * Add clients to thread
    */
-  public function addUsers(int $threadId, Collection $userIds) {
+  public function addClients(int $threadId, Collection $clientIds) {
     $thread = $this->checkAndGet($threadId);
-    $currIds = $thread->userThreads->map(function($ut) { return $ut->user_id; });
+    $currIds = $thread->clientThreads->map(function($ut) { return $ut->client_id; });
 
-    $userIds->each(function ($item) use ($threadId, $currIds) {
+    $clientIds->each(function ($item) use ($threadId, $currIds) {
       if(!$currIds->contains($item))
-        UserThread::create(['user_id' => $item, 'thread_id' => $threadId]);
+        ClientThread::create(['client_id' => $item, 'thread_id' => $threadId]);
     });
   }
   
   /**
-   * Add users to thread
+   * Add clients to thread
    */
-  public function removeUsers(int $threadId, Collection $userIds) {
+  public function removeClients(int $threadId, Collection $clientIds) {
     $this->checkAndGet($threadId);
 
-    UserThread::where('thread_id', $threadId)->whereIn('user_id', $userIds->toArray())->delete();
+    ClientThread::where('thread_id', $threadId)->whereIn('client_id', $clientIds->toArray())->delete();
   }
 
 }

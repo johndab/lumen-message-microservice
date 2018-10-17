@@ -18,11 +18,11 @@ class MessageController extends Controller
     /**
      * Get thread messages
      */
-    public function get(int $threadId, $userId = null, Request $request) {
+    public function get(int $threadId, $clientId = null, Request $request) {
         $take = isset($request->take) ? $request->take : 10;
         $skip = isset($request->skip) ? $request->skip : 0;
 
-        $messages = $this->service->get($threadId, $userId, $take, $skip);
+        $messages = $this->service->get($threadId, $clientId, $take, $skip);
         return response()->json(
             MessageResource::collection($messages)
         );
@@ -34,15 +34,15 @@ class MessageController extends Controller
     public function add(int $threadId, Request $request) {
         $this->validate($request, [
             'content' => 'Required|min:1',
-            'userId' => 'Required',
+            'clientId' => 'Required',
         ]);
 
         $content = $request->content;
         $params = $request->params;
-        $userId = $request->userId;
+        $clientId = $request->clientId;
         $this->checkJson($params);
         
-        $message = $this->service->add($threadId, $userId, $content, $params);
+        $message = $this->service->add($threadId, $clientId, $content, $params);
 
         return response()->json(new MessageResource($message));
     }

@@ -21,7 +21,7 @@ $factory->define(App\Thread::class, function (Faker\Generator $faker) {
 $factory->define(App\Message::class, function (Faker\Generator $faker) {
     return [
         'thread_id' => 1,
-        'user_id' => rand(1,3),
+        'client_id' => rand(1,3),
         'content' => $faker->realText(100, 2),
         'params' => null,
     ];
