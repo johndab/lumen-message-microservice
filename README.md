@@ -1,6 +1,6 @@
 # Message Microservice
 
-Deployable as independent (micro)service with its own database providing REST API for managing threads and messages
+Deployable as independent microservice with its own database providing REST API for managing threads and messages
 
 ## Prerequisites
 - php
