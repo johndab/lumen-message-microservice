@@ -59,7 +59,7 @@ class ThreadService {
    * Disonnect client from the thread
    */
   public function disconnectClient(int $threadId, string $clientId) {
-    $clientThread = ClientThread::where([['thread_id', $threadId], ['client_id', $clientId]])->findOrFail();
+    $clientThread = ClientThread::where([['thread_id', $threadId], ['client_id', $clientId]])->firstOrFail();
     $clientThread->disconnected = true;
     $clientThread->save();
   }

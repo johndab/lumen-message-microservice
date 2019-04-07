@@ -27,3 +27,4 @@ $router->delete('/thread/{threadId}[/{clientId}]', 'ThreadController@delete');
 
 $router->post('/thread/clients/{threadId}[/{clientId}]', 'ThreadController@addClients');
 $router->delete('/thread/clients/{threadId}[/{clientId}]', 'ThreadController@removeClients');
+$router->delete('/thread/disconnect/{threadId}/{clientId}', 'ThreadController@disconnectClient');
