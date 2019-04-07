@@ -36,8 +36,8 @@ class ThreadService {
    */
   public function get(string $clientId) {
     return Thread::whereHas('clientThreads', function ($query) use ($clientId) {
-      $query->where('client_id', $clientId);
-    })->with('clientThreads')->get();
+      $query->where([['client_id', $clientId], ['disconnected', false]]);
+    })->with('clientThreads')->orderBy('created_at', 'desc')->get();
   }
 
   /**
@@ -53,6 +53,15 @@ class ThreadService {
   public function delete(int $threadId) {
     $thread = $this->checkAndGet($threadId);
     $thread->delete();
+  }
+
+  /**
+   * Disonnect client from the thread
+   */
+  public function disconnectClient(int $threadId, string $clientId) {
+    $clientThread = ClientThread::where([['thread_id', $threadId], ['client_id', $clientId]])->findOrFail();
+    $clientThread->disconnected = true;
+    $clientThread->save();
   }
   
   /**
@@ -87,7 +96,6 @@ class ThreadService {
    */
   public function removeClients(int $threadId, Collection $clientIds) {
     $this->checkAndGet($threadId);
-
     ClientThread::where('thread_id', $threadId)->whereIn('client_id', $clientIds->toArray())->delete();
   }
 

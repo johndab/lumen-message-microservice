@@ -38,6 +38,7 @@ class Base extends Migration
         Schema::create('client_threads', function (Blueprint $table) {
             $table->uuid('client_id');
             $table->integer('thread_id')->unsigned();
+            $table->boolean('disconnected')->default(false);
 
             $table->primary(['client_id', 'thread_id']);
             $table->timestamps();

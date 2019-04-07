@@ -45,7 +45,7 @@ class ThreadController extends Controller
             $this->service->addClients($thread->id, $clientIds);
         }
 
-        return response()->json($thread);
+        return response()->json(new ThreadResource($thread));
     }
 
     /**
@@ -62,7 +62,7 @@ class ThreadController extends Controller
         $this->checkJson($params);
         
         $thread = $this->service->update($threadId, $title, $params);
-        return response()->json($thread);
+        return response()->json(new ThreadResource($thread));
     }
 
     /**
@@ -97,6 +97,15 @@ class ThreadController extends Controller
             $clientIds = collect($clients);
             $this->service->removeClients($threadId, $clientIds);
         }
+        return $this->success();
+    }
+
+    /**
+     * Mark the client as disconnected
+     */
+    public function disconnectClient(int $threadId, string $clientId) {
+        $this->service->checkClient($threadId, $clientId);
+        $this->service->disconnectClient($threadId, $clientId);
         return $this->success();
     }
 }

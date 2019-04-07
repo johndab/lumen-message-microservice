@@ -16,7 +16,7 @@ class MessageService {
    */
   public function get(int $threadId, $clientId, int $take, int $skip) {
     $thread = $this->threadService->checkClient($threadId, $clientId);
-    return $thread->messages()->skip($skip)->take($take)->get();
+    return $thread->messages()->orderBy('created_at', 'desc')->skip($skip)->take($take)->get();
   }
 
   
