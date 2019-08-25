@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Collection;
 use App\Exceptions\NoThreadException;
-use App\Exceptions\NoAccessException;
+use App\Exceptions\Auth\NoAccessException;
 use App\Thread;
 use App\ClientThread;
 
