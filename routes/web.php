@@ -20,6 +20,7 @@ $router->get('/messages/{threadId}[/{clientId}]', 'MessageController@get');
 $router->post('/message/{threadId}', 'MessageController@add');
 
 /** Threads **/
+$router->get('/thread/{threadId}', 'ThreadController@getSingle');
 $router->get('/threads/{clientId}', 'ThreadController@get');
 $router->post('/thread', 'ThreadController@add');
 $router->put('/thread/{threadId}[/{clientId}]', 'ThreadController@update');

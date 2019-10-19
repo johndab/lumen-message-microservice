@@ -41,6 +41,13 @@ class ThreadService {
   }
 
   /**
+   * Get single thread
+   */
+  public function getSingle(string $threadId) {
+    return Thread::find($threadId);
+  }
+
+  /**
    *  Add a thread
    */
   public function add(String $title, $params) {

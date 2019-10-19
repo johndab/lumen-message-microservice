@@ -27,6 +27,16 @@ class ThreadController extends Controller
     }
 
     /**
+     * Get client's threads
+     */
+    public function getSingle(string $threadId) {
+        $thread = $this->service->getSingle($threadId);
+        return response()->json(
+            new ThreadResource($thread)
+        );
+    }
+
+    /**
      * Create new thread
      */
     public function add(Request $request) {
